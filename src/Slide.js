@@ -14,6 +14,7 @@ export default function Slide() {
     useEffect(() => {
         if (colorLed != '') {
             console.log(colorLed);
+            console.log(hexToRGBTrama(colorLed));
             setTextColor(colorLed);
         } else {
             picker.current.setColor(prevColor);
@@ -40,6 +41,11 @@ export default function Slide() {
 
     )
 
+}
+
+const hexToRGBTrama = (hex) => {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return `R${parseInt(result[1], 16)}G${parseInt(result[2], 16)}B${parseInt(result[3], 16)}`;
 }
 
 const styles = StyleSheet.create({
