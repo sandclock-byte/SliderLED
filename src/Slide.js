@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ColorPicker, ColorPickerRef } from 'react-native-color-picker-light';
+import Slider from '@react-native-community/slider';
 
 export default function Slide() {
 
@@ -37,6 +38,16 @@ export default function Slide() {
             <View style={{ height: 50, width: 200, backgroundColor: colorLed != '' ? colorLed : prevColor }}>
                 <Text>{textColor}</Text>
             </View>
+            <Slider
+                style={{ width: 200, height: 40 }}
+                minimumValue={0}
+                maximumValue={255}
+                onValueChange={(valor) => {
+                    console.log(Math.round(valor));
+                }}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+            />
         </View>
 
     )
