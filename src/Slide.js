@@ -4,40 +4,44 @@ import { ColorPicker, ColorPickerRef } from 'react-native-color-picker-light';
 
 export default function Slide() {
 
+    const prevColor = '#4e3fee';
+
+    const picker = useRef();
+
     const [colorLed, setColorLed] = useState('');
+    const [textColor, setTextColor] = useState('');
 
     useEffect(() => {
         if (colorLed != '') {
-            // picker.current.setColor(colorLed);
             console.log(colorLed);
+            setTextColor(colorLed);
+        } else {
+            picker.current.setColor(prevColor);
+            setTextColor(prevColor);
         }
     }, [colorLed])
 
-    // const picker = useRef();
-    // console.log(picker);
-    // picker.current.setColor('#f0ce78');
-
-    // console.log(picker);
-
     return (
-
         <View>
-            <ColorPicker
-                // ref={picker}
-                type="color"
-                style={{ width: 200, height: 200 }}
-                onColorChange={color => {
-                    setColorLed(color);
-                }}
-            />
-
-            {/* {picker.current.setColor('#b48484')} */}
-
+            <View>
+                <ColorPicker
+                    ref={picker}
+                    type="color"
+                    style={{ width: 200, height: 200 }}
+                    onColorChange={color => {
+                        setColorLed(color);
+                    }}
+                />
+            </View>
+            <View style={{ height: 50, width: 200, backgroundColor: colorLed != '' ? colorLed : prevColor }}>
+                <Text>{textColor}</Text>
+            </View>
         </View>
-
 
     )
 
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})
