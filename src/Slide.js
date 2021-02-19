@@ -8,7 +8,7 @@ LogBox.ignoreAllLogs();
 
 export default function Slide() {
 
-    const prevTrama = 'R78G63B238W125';
+    const prevTrama = '78 63 238 125';
 
     tramaToColor(prevTrama);
 
@@ -39,16 +39,18 @@ export default function Slide() {
 
     return (
         <View>
-            {/* <View>
+            <View>
                 <ColorPicker
-                    ref={picker}
-                    type="color"
-                    style={{ width: 200, height: 200 }}
-                    onColorChange={color => {
-                        setColorLed(color);
-                    }}
+                    color={prevColor}
+                    onColorChange={(color => setColorLed(color))}
+                    // onColorChangeComplete={(color => setColorLed(color))}
+                    swatches={false}
+                    thumbSize={40}
+                    sliderSize={40}
+                    noSnap={false}
+                    row={false}
                 />
-            </View> */}
+            </View>
             <View style={{ height: 50, width: 200, backgroundColor: colorLed != '' ? colorLed : prevColor }}>
                 <Text>{textColor}</Text>
             </View>
@@ -62,20 +64,7 @@ export default function Slide() {
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="#000000"
             />
-            <ColorPicker
-                    // ref={r => { this.picker = r }}
-                    color={prevColor}
-                    onColorChange={(color => console.log(color))}
-                    // onColorChangeComplete={(color => console.log(color))}
-                    swatches={false}
-                    thumbSize={40}
-                    sliderSize={40}
-                    noSnap={false}
-                    row={false}
-                    // swatchesLast={this.state.swatchesLast}
-                    // swatches={this.state.swatchesEnabled}
-                    // discrete={this.state.disc}
-                />
+
         </View>
 
     )
@@ -96,19 +85,37 @@ const rgbToHex = (r, g, b) => {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
-
 const tramaToColor = (trama) => {
 
-    const indexR = trama.indexOf('R');
-    const indexG = trama.indexOf('G');
-    const indexB = trama.indexOf('B');
-    const indexW = trama.indexOf('W');
+    let r = '';
+    let g = '';
+    let b = '';
+    let w = '';
 
-    const Red = parseInt(trama.slice(indexR + 1, indexG));
-    const Green = parseInt(trama.slice(indexG + 1, indexB));
-    const Blue = parseInt(trama.slice(indexB + 1, indexW));
-    const White = parseInt(trama.slice(indexW + 1, trama.lenght));
-
+    let j = 1;
+    for (let i = 0; i < trama.length; i++) {
+        if (trama[i] != ' ') {
+            if (j === 1) {
+                r += trama[i];
+            }
+            if (j === 2) {
+                g += trama[i];
+            }
+            if (j === 3) {
+                b += trama[i];
+            }
+            if (j === 4) {
+                w += trama[i];
+            }
+        } else {
+            j++;
+        }
+    }
+    const Red = parseInt(r);
+    const Green = parseInt(g);
+    const Blue = parseInt(b);
+    const White = parseInt(w);
+    
     console.log(rgbToHex(Red, Green, Blue));
 }
 
