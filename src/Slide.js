@@ -26,11 +26,9 @@ export default function Slide() {
 
     useEffect(() => {
         if (colorLed != '') {
-            // console.log(colorLed);
             console.log(hexToRGBTrama(colorLed));
             setTextColor(colorLed);
         } else {
-            // picker.current.setColor(prevColor);
             setTextColor(prevColor);
         }
     }, [colorLed]);
@@ -42,19 +40,21 @@ export default function Slide() {
     }, [whiteLed])
 
     return (
-        <View style={{ width: '100%', height: '100%', alignItems: 'center' }}>
+        <View style={{ width: '100%', height: '100%', backgroundColor: 'lightgrey' }}>
 
             <View style={styles.colorLedPick}>
-                <ColorPicker
-                    color={prevColor}
-                    onColorChange={(color => setColorLed(color))}
-                    // onColorChangeComplete={(color => setColorLed(color))}
-                    swatches={false}
-                    thumbSize={40}
-                    sliderSize={40}
-                    noSnap={false}
-                    row={false}
-                />
+                <View style={{ width: '85%', }}>
+                    <ColorPicker
+                        color={prevColor}
+                        onColorChange={(color => setColorLed(color))}
+                        // onColorChangeComplete={(color => setColorLed(color))}
+                        swatches={false}
+                        thumbSize={40}
+                        sliderSize={40}
+                        noSnap={false}
+                        row={false}
+                    />
+                </View>
             </View>
 
             <View style={styles.colorLedOptions}>
@@ -79,7 +79,7 @@ export default function Slide() {
             <View style={styles.whiteLed}>
 
                 <Slider
-                    style={{ width: 350, height: 50 }}
+                    style={{ width: '85%', height: 50 }}
                     minimumValue={0}
                     maximumValue={255}
                     onValueChange={(valor) => {
@@ -89,47 +89,16 @@ export default function Slide() {
                     maximumTrackTintColor="#000000"
                 />
 
-            </View>
-
-            <View style={styles.whiteLedOptions}>
-
                 <Switch
                     style={{ height: 50, width: 50 }}
                     trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isActivedSwitch1 ? "#f5dd4b" : "#f4f3f4"}
+                    thumbColor={isActivedSwitch2 ? "#f5dd4b" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => setIsActivedSwitch2(previousState => !previousState)}
                     value={isActivedSwitch2}
                 />
 
             </View>
-
-            {/* <View>
-                <ColorPicker
-                    color={prevColor}
-                    onColorChange={(color => setColorLed(color))}
-                    // onColorChangeComplete={(color => setColorLed(color))}
-                    swatches={false}
-                    thumbSize={40}
-                    sliderSize={40}
-                    noSnap={false}
-                    row={false}
-                />
-            </View>
-            <View style={{ height: 50, width: 200, backgroundColor: colorLed != '' ? colorLed : prevColor }}>
-                <Text>{textColor}</Text>
-            </View>
-            <Slider
-                style={{ width: 200, height: 40 }}
-                minimumValue={0}
-                maximumValue={255}
-                onValueChange={(valor) => {
-                    setWhiteLed(Math.round(valor));
-                }}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-            /> */}
-
         </View>
 
     )
@@ -189,29 +158,26 @@ const tramaToColor = (trama) => {
 
 const styles = StyleSheet.create({
     colorLedPick: {
-        flex: 5,
-        backgroundColor: 'lightblue',
-        width: '85%',
+        flex: 3,
+        alignItems: 'center',
     },
 
     colorLedOptions: {
         flex: 2,
         flexDirection: 'row',
-        backgroundColor: 'lightgreen',
     },
 
     whiteLed: {
-        flex: 5,
+        flex: 3,
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'lightgrey',
+        justifyContent: 'space-evenly',
     },
 
-    whiteLedOptions: {
-        flex: 2,
-        justifyContent: 'center',
-        backgroundColor: 'lightyellow',
-    },
+    // whiteLedOptions: {
+    //     flex: 2,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
 
     showColor: {
         flex: 1,
