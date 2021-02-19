@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, LogBox } from 'react-native';
+import { StyleSheet, Text, View, LogBox, Switch } from 'react-native';
 // import { ColorPicker, ColorPickerRef } from 'react-native-color-picker-light';
 import Slider from '@react-native-community/slider';
 import ColorPicker from 'react-native-wheel-color-picker';
@@ -21,6 +21,8 @@ export default function Slide() {
     const [colorLed, setColorLed] = useState('');
     const [textColor, setTextColor] = useState('');
     const [whiteLed, setWhiteLed] = useState('');
+    const [isActivedSwitch1, setIsActivedSwitch1] = useState(false);
+    const [isActivedSwitch2, setIsActivedSwitch2] = useState(false);
 
     useEffect(() => {
         if (colorLed != '') {
@@ -40,7 +42,7 @@ export default function Slide() {
     }, [whiteLed])
 
     return (
-        <View style={{ width: '100%', height: '100%' }}>
+        <View style={{ width: '100%', height: '100%', alignItems: 'center' }}>
 
             <View style={styles.colorLedPick}>
                 <ColorPicker
@@ -62,6 +64,14 @@ export default function Slide() {
                 </View>
 
                 <View style={styles.switchColor}>
+                    <Switch
+                        style={{ height: 50, width: 50 }}
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={isActivedSwitch1 ? "#f5dd4b" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => setIsActivedSwitch1(previousState => !previousState)}
+                        value={isActivedSwitch1}
+                    />
                 </View>
 
             </View>
@@ -69,7 +79,7 @@ export default function Slide() {
             <View style={styles.whiteLed}>
 
                 <Slider
-                    style={{ width: '90%', height: 50 }}
+                    style={{ width: 350, height: 50 }}
                     minimumValue={0}
                     maximumValue={255}
                     onValueChange={(valor) => {
@@ -82,6 +92,15 @@ export default function Slide() {
             </View>
 
             <View style={styles.whiteLedOptions}>
+
+                <Switch
+                    style={{ height: 50, width: 50 }}
+                    trackColor={{ false: "#767577", true: "#81b0ff" }}
+                    thumbColor={isActivedSwitch1 ? "#f5dd4b" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={() => setIsActivedSwitch2(previousState => !previousState)}
+                    value={isActivedSwitch2}
+                />
 
             </View>
 
@@ -172,6 +191,7 @@ const styles = StyleSheet.create({
     colorLedPick: {
         flex: 5,
         backgroundColor: 'lightblue',
+        width: '85%',
     },
 
     colorLedOptions: {
@@ -189,6 +209,7 @@ const styles = StyleSheet.create({
 
     whiteLedOptions: {
         flex: 2,
+        justifyContent: 'center',
         backgroundColor: 'lightyellow',
     },
 
@@ -204,6 +225,8 @@ const styles = StyleSheet.create({
 
     switchColor: {
         flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
 
