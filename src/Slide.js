@@ -10,9 +10,11 @@ export default function Slide() {
 
     const prevTrama = '78 63 238 125';
 
-    tramaToColor(prevTrama);
+    let prevValues = tramaToColor(prevTrama);
 
-    let prevColor = '#4e3fee';
+    // let prevColor = '#4e3fee';
+    let prevColor = prevValues.colorHex;
+
 
     // const picker = useRef();
 
@@ -22,7 +24,7 @@ export default function Slide() {
 
     useEffect(() => {
         if (colorLed != '') {
-            console.log(colorLed);
+            // console.log(colorLed);
             console.log(hexToRGBTrama(colorLed));
             setTextColor(colorLed);
         } else {
@@ -73,7 +75,7 @@ export default function Slide() {
 
 const hexToRGBTrama = (hex) => {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return `R${parseInt(result[1], 16)}G${parseInt(result[2], 16)}B${parseInt(result[3], 16)}`;
+    return `${parseInt(result[1], 16)} ${parseInt(result[2], 16)} ${parseInt(result[3], 16)}`;
 }
 
 const componentToHex = (c) => {
@@ -115,8 +117,11 @@ const tramaToColor = (trama) => {
     const Green = parseInt(g);
     const Blue = parseInt(b);
     const White = parseInt(w);
-    
-    console.log(rgbToHex(Red, Green, Blue));
+
+    return {
+        colorHex: rgbToHex(Red, Green, Blue),
+        white: White,
+    }
 }
 
 const styles = StyleSheet.create({
