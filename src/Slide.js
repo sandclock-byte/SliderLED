@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ColorPicker, ColorPickerRef } from 'react-native-color-picker-light';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
+// import { ColorPicker, ColorPickerRef } from 'react-native-color-picker-light';
 import Slider from '@react-native-community/slider';
+import ColorPicker from 'react-native-wheel-color-picker';
+
+LogBox.ignoreAllLogs();
 
 export default function Slide() {
 
@@ -11,7 +14,7 @@ export default function Slide() {
 
     let prevColor = '#4e3fee';
 
-    const picker = useRef();
+    // const picker = useRef();
 
     const [colorLed, setColorLed] = useState('');
     const [textColor, setTextColor] = useState('');
@@ -23,7 +26,7 @@ export default function Slide() {
             console.log(hexToRGBTrama(colorLed));
             setTextColor(colorLed);
         } else {
-            picker.current.setColor(prevColor);
+            // picker.current.setColor(prevColor);
             setTextColor(prevColor);
         }
     }, [colorLed]);
@@ -36,7 +39,7 @@ export default function Slide() {
 
     return (
         <View>
-            <View>
+            {/* <View>
                 <ColorPicker
                     ref={picker}
                     type="color"
@@ -45,7 +48,7 @@ export default function Slide() {
                         setColorLed(color);
                     }}
                 />
-            </View>
+            </View> */}
             <View style={{ height: 50, width: 200, backgroundColor: colorLed != '' ? colorLed : prevColor }}>
                 <Text>{textColor}</Text>
             </View>
@@ -59,6 +62,20 @@ export default function Slide() {
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="#000000"
             />
+            <ColorPicker
+                    // ref={r => { this.picker = r }}
+                    color={prevColor}
+                    onColorChange={(color => console.log(color))}
+                    // onColorChangeComplete={(color => console.log(color))}
+                    swatches={false}
+                    thumbSize={40}
+                    sliderSize={40}
+                    noSnap={false}
+                    row={false}
+                    // swatchesLast={this.state.swatchesLast}
+                    // swatches={this.state.swatchesEnabled}
+                    // discrete={this.state.disc}
+                />
         </View>
 
     )
