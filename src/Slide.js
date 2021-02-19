@@ -40,8 +40,52 @@ export default function Slide() {
     }, [whiteLed])
 
     return (
-        <View>
-            <View>
+        <View style={{ width: '100%', height: '100%' }}>
+
+            <View style={styles.colorLedPick}>
+                <ColorPicker
+                    color={prevColor}
+                    onColorChange={(color => setColorLed(color))}
+                    // onColorChangeComplete={(color => setColorLed(color))}
+                    swatches={false}
+                    thumbSize={40}
+                    sliderSize={40}
+                    noSnap={false}
+                    row={false}
+                />
+            </View>
+
+            <View style={styles.colorLedOptions}>
+
+                <View style={[styles.showColor, { backgroundColor: colorLed != '' ? colorLed : prevColor }]}>
+                    <Text>{textColor}</Text>
+                </View>
+
+                <View style={styles.switchColor}>
+                </View>
+
+            </View>
+
+            <View style={styles.whiteLed}>
+
+                <Slider
+                    style={{ width: '90%', height: 50 }}
+                    minimumValue={0}
+                    maximumValue={255}
+                    onValueChange={(valor) => {
+                        setWhiteLed(Math.round(valor));
+                    }}
+                    minimumTrackTintColor="#FFFFFF"
+                    maximumTrackTintColor="#000000"
+                />
+
+            </View>
+
+            <View style={styles.whiteLedOptions}>
+
+            </View>
+
+            {/* <View>
                 <ColorPicker
                     color={prevColor}
                     onColorChange={(color => setColorLed(color))}
@@ -65,7 +109,7 @@ export default function Slide() {
                 }}
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="#000000"
-            />
+            /> */}
 
         </View>
 
@@ -125,5 +169,42 @@ const tramaToColor = (trama) => {
 }
 
 const styles = StyleSheet.create({
+    colorLedPick: {
+        flex: 5,
+        backgroundColor: 'lightblue',
+    },
+
+    colorLedOptions: {
+        flex: 2,
+        flexDirection: 'row',
+        backgroundColor: 'lightgreen',
+    },
+
+    whiteLed: {
+        flex: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightgrey',
+    },
+
+    whiteLedOptions: {
+        flex: 2,
+        backgroundColor: 'lightyellow',
+    },
+
+    showColor: {
+        flex: 1,
+        margin: 15,
+        borderWidth: 4,
+        borderRadius: 20,
+        borderColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    switchColor: {
+        flex: 1,
+    },
+
 
 })
