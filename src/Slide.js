@@ -6,6 +6,7 @@ import ColorPicker from 'react-native-wheel-color-picker';
 
 LogBox.ignoreAllLogs();
 
+
 export default function Slide() {
 
     const prevTrama = '78 63 238 125';
@@ -23,6 +24,9 @@ export default function Slide() {
 
     const [colorSwitch, setcolorSwitch] = useState(false);
     const [whiteSwitch, setwhiteSwitch] = useState(false);
+
+    const [pass1, setPass1] = useState(false);
+    const [pass2, setPass2] = useState(false);
 
     useEffect(() => {
 
@@ -49,31 +53,26 @@ export default function Slide() {
     }, [whiteLed]);
 
     useEffect(() => {
-        let tramaLED;
-        let tramaLEDWhite = whiteSwitch ? ` ${whiteLed}` : ` 0`;
-        if (colorSwitch) {
-            tramaLED = hexToRGBTrama(colorLed) + tramaLEDWhite;
+        if (pass1) {
+            let tramaLEDWhite = whiteSwitch ? ` ${whiteLed}` : ` 0`;
+            let tramaLED = colorSwitch ? hexToRGBTrama(colorLed) + tramaLEDWhite : `0 0 0${tramaLEDWhite}`;
 
-        } else {
-            tramaLED = `0 0 0${tramaLEDWhite}`;
+            console.log(tramaLED);
+
         }
-
-        console.log(tramaLED);
-
+        setPass1(true)
 
     }, [colorSwitch]);
 
     useEffect(() => {
-        let tramaLED;
-        let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
-        if (whiteSwitch) {
-            tramaLED = `${tramaLEDColor} ${whiteLed}`;
+        if (pass2) {
+            let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
+            let tramaLED = whiteSwitch ? `${tramaLEDColor} ${whiteLed}` : `${tramaLEDColor} 0`;
 
-        } else {
-            tramaLED = `${tramaLEDColor} 0`
+            console.log(tramaLED);
         }
+        setPass2(true);
 
-        console.log(tramaLED);
     }, [whiteSwitch]);
 
 
