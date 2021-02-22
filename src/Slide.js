@@ -21,49 +21,54 @@ export default function Slide() {
 
     const [colorLed, setColorLed] = useState(prevColor);
     const [prevColorLed, setPrevColorLed] = useState(colorLed);
-    
+
     const [whiteLed, setWhiteLed] = useState(prevWhite);
     const [prevWhiteLed, setPrevWhiteLed] = useState(whiteLed);
 
     const [isColorLedChanged, setIsColorLedChanged] = useState(false);
     const [isWhiteLedChanged, setIsWhiteLedChanged] = useState(false);
 
-    const [textColor, setTextColor] = useState('');
+    const [textColor, setTextColor] = useState(prevColor);
 
     const [colorSwitch, setcolorSwitch] = useState(false);
     const [whiteSwitch, setwhiteSwitch] = useState(false);
 
     useEffect(() => {
 
-        setPrevColorLed(colorLed);
-
-        if (colorLed != prevColor && isColorLedChanged) {
-            // let tramaLED = whiteSwitch ? `${hexToRGBTrama(colorLed)} ${whiteLed}` : `${hexToRGBTrama(colorLed)} 0`;
+        if (colorSwitch || whiteSwitch) {
             let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
             let tramaLEDWhite = whiteSwitch ? ` ${whiteLed}` : ` 0`;
             let tramaLED = tramaLEDColor + tramaLEDWhite;
+
+            if (!colorSwitch || !whiteSwitch) {
+                if (!colorSwitch && colorLed != prevColorLed) return;
+                if (!whiteSwitch && whiteLed != prevWhiteLed) return;
+            }
+
+            setPrevColorLed(colorLed);
+            setPrevWhiteLed(whiteLed);
+
             console.log(tramaLED);
             setTextColor(colorLed);
-        } else {
-            setTextColor(prevColor);
         }
-    }, [colorLed]);
 
-    useEffect(() => {
+    }, [colorLed, whiteLed]);
 
-        setPrevWhiteLed(whiteLed);
+    // useEffect(() => {
 
-        if (whiteLed != prevWhite && isWhiteLedChanged) {
-            console.log(whiteLed);
-        }
-    }, [whiteLed]);
+    //     setPrevWhiteLed(whiteLed);
+
+    //     if (whiteLed != prevWhite && isWhiteLedChanged) {
+    //         console.log(whiteLed);
+    //     }
+    // }, [whiteLed]);
 
     const changeColor = (color) => {
         setColorLed(color);
         setIsColorLedChanged(true);
     }
 
-    const changeWhite= (valor) => {
+    const changeWhite = (valor) => {
         setIsWhiteLedChanged(true);
         setWhiteLed(Math.round(valor));
     }
@@ -77,11 +82,12 @@ export default function Slide() {
                 <View style={{ width: '85%', }}>
                     <ColorPicker
                         color={prevColor}
-                        onColorChange={
-                            isColorLedChanged ?
-                                color => setColorLed(color)
-                                : color => changeColor(color)
-                        }
+                        onColorChange={color => setColorLed(color)}
+                        // onColorChange={
+                        //     isColorLedChanged ?
+                        //         color => setColorLed(color)
+                        //         : color => changeColor(color)
+                        // }
                         // onColorChangeComplete={isChanged ? color => setColorLed(color) : color => changeColor(color)}
                         swatches={false}
                         thumbSize={40}
@@ -117,11 +123,13 @@ export default function Slide() {
                     style={{ width: '85%', height: 50 }}
                     minimumValue={0}
                     maximumValue={255}
-                    onValueChange={
-                        isWhiteLedChanged ?
-                            valor => setWhiteLed(Math.round(valor))
-                            : valor => changeWhite(valor)
-                    }
+                    value={prevWhite}
+                    // onValueChange={
+                    //     isWhiteLedChanged ?
+                    //         valor => setWhiteLed(Math.round(valor))
+                    //         : valor => changeWhite(valor)
+                    // }
+                    onValueChange={valor => setWhiteLed(Math.round(valor))}
                     minimumTrackTintColor="#FFFFFF"
                     maximumTrackTintColor="#000000"
                 />
