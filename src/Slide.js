@@ -35,33 +35,28 @@ export default function Slide() {
 
     useEffect(() => {
 
-        if (colorSwitch || whiteSwitch) {
-            let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
+        if (colorSwitch) {
+
             let tramaLEDWhite = whiteSwitch ? ` ${whiteLed}` : ` 0`;
-            let tramaLED = tramaLEDColor + tramaLEDWhite;
-
-            if (!colorSwitch || !whiteSwitch) {
-                if (!colorSwitch && colorLed != prevColorLed) return;
-                if (!whiteSwitch && whiteLed != prevWhiteLed) return;
-            }
-
-            setPrevColorLed(colorLed);
-            setPrevWhiteLed(whiteLed);
+            let tramaLED = hexToRGBTrama(colorLed) + tramaLEDWhite;
 
             console.log(tramaLED);
             setTextColor(colorLed);
         }
 
-    }, [colorLed, whiteLed]);
+    }, [colorLed]);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     setPrevWhiteLed(whiteLed);
+        if (whiteSwitch) {
+            
+            let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
+            let tramaLED = `${tramaLEDColor} ${whiteLed}`;
 
-    //     if (whiteLed != prevWhite && isWhiteLedChanged) {
-    //         console.log(whiteLed);
-    //     }
-    // }, [whiteLed]);
+            console.log(tramaLED);
+            setTextColor(colorLed);
+        }
+    }, [whiteLed]);
 
     const changeColor = (color) => {
         setColorLed(color);
