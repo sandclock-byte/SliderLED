@@ -14,20 +14,35 @@ export default function Slide() {
 
     // let prevColor = '#4e3fee';
     let prevColor = prevValues.colorHex;
+    let prevWhite = prevValues.white;
 
 
     // const picker = useRef();
 
-    const [colorLed, setColorLed] = useState('');
-    const [isChanged, setIsChanged] = useState(false);
+    const [colorLed, setColorLed] = useState(prevColor);
+    const [prevColorLed, setPrevColorLed] = useState(colorLed);
+    
+    const [whiteLed, setWhiteLed] = useState(prevWhite);
+    const [prevWhiteLed, setPrevWhiteLed] = useState(whiteLed);
+
+    const [isColorLedChanged, setIsColorLedChanged] = useState(false);
+    const [isWhiteLedChanged, setIsWhiteLedChanged] = useState(false);
+
     const [textColor, setTextColor] = useState('');
-    const [whiteLed, setWhiteLed] = useState('');
-    const [isActivedSwitch1, setIsActivedSwitch1] = useState(false);
-    const [isActivedSwitch2, setIsActivedSwitch2] = useState(false);
+
+    const [colorSwitch, setcolorSwitch] = useState(false);
+    const [whiteSwitch, setwhiteSwitch] = useState(false);
 
     useEffect(() => {
-        if (colorLed != prevColor && isChanged) {
-            console.log(hexToRGBTrama(colorLed));
+
+        setPrevColorLed(colorLed);
+
+        if (colorLed != prevColor && isColorLedChanged) {
+            // let tramaLED = whiteSwitch ? `${hexToRGBTrama(colorLed)} ${whiteLed}` : `${hexToRGBTrama(colorLed)} 0`;
+            let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
+            let tramaLEDWhite = whiteSwitch ? ` ${whiteLed}` : ` 0`;
+            let tramaLED = tramaLEDColor + tramaLEDWhite;
+            console.log(tramaLED);
             setTextColor(colorLed);
         } else {
             setTextColor(prevColor);
@@ -35,14 +50,22 @@ export default function Slide() {
     }, [colorLed]);
 
     useEffect(() => {
-        if (whiteLed) {
+
+        setPrevWhiteLed(whiteLed);
+
+        if (whiteLed != prevWhite && isWhiteLedChanged) {
             console.log(whiteLed);
         }
     }, [whiteLed]);
 
     const changeColor = (color) => {
         setColorLed(color);
-        setIsChanged(true);
+        setIsColorLedChanged(true);
+    }
+
+    const changeWhite= (valor) => {
+        setIsWhiteLedChanged(true);
+        setWhiteLed(Math.round(valor));
     }
 
 
@@ -54,7 +77,11 @@ export default function Slide() {
                 <View style={{ width: '85%', }}>
                     <ColorPicker
                         color={prevColor}
-                        onColorChange={isChanged ? color => setColorLed(color) : color => changeColor(color)}
+                        onColorChange={
+                            isColorLedChanged ?
+                                color => setColorLed(color)
+                                : color => changeColor(color)
+                        }
                         // onColorChangeComplete={isChanged ? color => setColorLed(color) : color => changeColor(color)}
                         swatches={false}
                         thumbSize={40}
@@ -75,10 +102,10 @@ export default function Slide() {
                     <Switch
                         style={{ height: 50, width: 50 }}
                         trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={isActivedSwitch1 ? "#f5dd4b" : "#f4f3f4"}
+                        thumbColor={colorSwitch ? "#f5dd4b" : "#f4f3f4"}
                         ios_backgroundColor="#3e3e3e"
-                        onValueChange={() => setIsActivedSwitch1(previousState => !previousState)}
-                        value={isActivedSwitch1}
+                        onValueChange={() => setcolorSwitch(previousState => !previousState)}
+                        value={colorSwitch}
                     />
                 </View>
 
@@ -90,9 +117,11 @@ export default function Slide() {
                     style={{ width: '85%', height: 50 }}
                     minimumValue={0}
                     maximumValue={255}
-                    onValueChange={(valor) => {
-                        setWhiteLed(Math.round(valor));
-                    }}
+                    onValueChange={
+                        isWhiteLedChanged ?
+                            valor => setWhiteLed(Math.round(valor))
+                            : valor => changeWhite(valor)
+                    }
                     minimumTrackTintColor="#FFFFFF"
                     maximumTrackTintColor="#000000"
                 />
@@ -100,10 +129,10 @@ export default function Slide() {
                 <Switch
                     style={{ height: 50, width: 50 }}
                     trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isActivedSwitch2 ? "#f5dd4b" : "#f4f3f4"}
+                    thumbColor={whiteSwitch ? "#f5dd4b" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => setIsActivedSwitch2(previousState => !previousState)}
-                    value={isActivedSwitch2}
+                    onValueChange={() => setwhiteSwitch(previousState => !previousState)}
+                    value={whiteSwitch}
                 />
 
             </View>
