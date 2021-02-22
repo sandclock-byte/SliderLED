@@ -19,13 +19,14 @@ export default function Slide() {
     // const picker = useRef();
 
     const [colorLed, setColorLed] = useState('');
+    const [isChanged, setIsChanged] = useState(false);
     const [textColor, setTextColor] = useState('');
     const [whiteLed, setWhiteLed] = useState('');
     const [isActivedSwitch1, setIsActivedSwitch1] = useState(false);
     const [isActivedSwitch2, setIsActivedSwitch2] = useState(false);
 
     useEffect(() => {
-        if (colorLed != '') {
+        if (colorLed != prevColor && isChanged) {
             console.log(hexToRGBTrama(colorLed));
             setTextColor(colorLed);
         } else {
@@ -37,7 +38,14 @@ export default function Slide() {
         if (whiteLed) {
             console.log(whiteLed);
         }
-    }, [whiteLed])
+    }, [whiteLed]);
+
+    const changeColor = (color) => {
+        setColorLed(color);
+        setIsChanged(true);
+    }
+
+
 
     return (
         <View style={{ width: '100%', height: '100%', backgroundColor: 'lightgrey' }}>
@@ -46,8 +54,8 @@ export default function Slide() {
                 <View style={{ width: '85%', }}>
                     <ColorPicker
                         color={prevColor}
-                        onColorChange={(color => setColorLed(color))}
-                        // onColorChangeComplete={(color => setColorLed(color))}
+                        onColorChange={isChanged ? color => setColorLed(color) : color => changeColor(color)}
+                        // onColorChangeComplete={isChanged ? color => setColorLed(color) : color => changeColor(color)}
                         swatches={false}
                         thumbSize={40}
                         sliderSize={40}
