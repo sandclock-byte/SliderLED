@@ -12,21 +12,12 @@ export default function Slide() {
 
     let prevValues = tramaToColor(prevTrama);
 
-    // let prevColor = '#4e3fee';
     let prevColor = prevValues.colorHex;
     let prevWhite = prevValues.white;
 
-
-    // const picker = useRef();
-
     const [colorLed, setColorLed] = useState(prevColor);
-    const [prevColorLed, setPrevColorLed] = useState(colorLed);
 
     const [whiteLed, setWhiteLed] = useState(prevWhite);
-    const [prevWhiteLed, setPrevWhiteLed] = useState(whiteLed);
-
-    const [isColorLedChanged, setIsColorLedChanged] = useState(false);
-    const [isWhiteLedChanged, setIsWhiteLedChanged] = useState(false);
 
     const [textColor, setTextColor] = useState(prevColor);
 
@@ -49,25 +40,41 @@ export default function Slide() {
     useEffect(() => {
 
         if (whiteSwitch) {
-            
+
             let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
             let tramaLED = `${tramaLEDColor} ${whiteLed}`;
 
             console.log(tramaLED);
-            setTextColor(colorLed);
         }
     }, [whiteLed]);
 
-    const changeColor = (color) => {
-        setColorLed(color);
-        setIsColorLedChanged(true);
-    }
+    useEffect(() => {
+        let tramaLED;
+        let tramaLEDWhite = whiteSwitch ? ` ${whiteLed}` : ` 0`;
+        if (colorSwitch) {
+            tramaLED = hexToRGBTrama(colorLed) + tramaLEDWhite;
 
-    const changeWhite = (valor) => {
-        setIsWhiteLedChanged(true);
-        setWhiteLed(Math.round(valor));
-    }
+        } else {
+            tramaLED = `0 0 0${tramaLEDWhite}`;
+        }
 
+        console.log(tramaLED);
+
+
+    }, [colorSwitch]);
+
+    useEffect(() => {
+        let tramaLED;
+        let tramaLEDColor = colorSwitch ? `${hexToRGBTrama(colorLed)}` : `0 0 0`;
+        if (whiteSwitch) {
+            tramaLED = `${tramaLEDColor} ${whiteLed}`;
+
+        } else {
+            tramaLED = `${tramaLEDColor} 0`
+        }
+
+        console.log(tramaLED);
+    }, [whiteSwitch]);
 
 
     return (
@@ -78,12 +85,7 @@ export default function Slide() {
                     <ColorPicker
                         color={prevColor}
                         onColorChange={color => setColorLed(color)}
-                        // onColorChange={
-                        //     isColorLedChanged ?
-                        //         color => setColorLed(color)
-                        //         : color => changeColor(color)
-                        // }
-                        // onColorChangeComplete={isChanged ? color => setColorLed(color) : color => changeColor(color)}
+                        // onColorChangeComplete={color => setColorLed(color)}
                         swatches={false}
                         thumbSize={40}
                         sliderSize={40}
@@ -119,11 +121,6 @@ export default function Slide() {
                     minimumValue={0}
                     maximumValue={255}
                     value={prevWhite}
-                    // onValueChange={
-                    //     isWhiteLedChanged ?
-                    //         valor => setWhiteLed(Math.round(valor))
-                    //         : valor => changeWhite(valor)
-                    // }
                     onValueChange={valor => setWhiteLed(Math.round(valor))}
                     minimumTrackTintColor="#FFFFFF"
                     maximumTrackTintColor="#000000"
