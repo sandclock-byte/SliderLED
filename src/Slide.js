@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, LogBox, Switch } from 'react-native';
+import { StyleSheet, Text, View, LogBox, Switch, Image, TouchableOpacity } from 'react-native';
 // import { ColorPicker, ColorPickerRef } from 'react-native-color-picker-light';
 import Slider from '@react-native-community/slider';
 import ColorPicker from 'react-native-wheel-color-picker';
@@ -58,7 +58,7 @@ export default function Slide() {
             let tramaLED = colorSwitch ? hexToRGBTrama(colorLed) + tramaLEDWhite : `0 0 0${tramaLEDWhite}`;
 
             console.log(tramaLED);
-
+            return;
         }
         setPass1(true)
 
@@ -70,10 +70,15 @@ export default function Slide() {
             let tramaLED = whiteSwitch ? `${tramaLEDColor} ${whiteLed}` : `${tramaLEDColor} 0`;
 
             console.log(tramaLED);
+            return;
         }
         setPass2(true);
 
     }, [whiteSwitch]);
+
+    const exitComponent = () => {
+        console.log('@');
+    }
 
 
     return (
@@ -115,24 +120,39 @@ export default function Slide() {
 
             <View style={styles.whiteLed}>
 
-                <Slider
-                    style={{ width: '85%', height: 50 }}
-                    minimumValue={0}
-                    maximumValue={255}
-                    value={prevWhite}
-                    onValueChange={valor => setWhiteLed(Math.round(valor))}
-                    minimumTrackTintColor="#FFFFFF"
-                    maximumTrackTintColor="#000000"
-                />
+                <View style={styles.whiteSlider}>
+                    <Slider
+                        style={{ width: '85%', height: 50 }}
+                        minimumValue={0}
+                        maximumValue={255}
+                        value={prevWhite}
+                        onValueChange={valor => setWhiteLed(Math.round(valor))}
+                        minimumTrackTintColor="#FFFFFF"
+                        maximumTrackTintColor="#000000"
+                    />
+                </View>
 
-                <Switch
-                    style={{ height: 50, width: 50 }}
-                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={whiteSwitch ? "#f5dd4b" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => setwhiteSwitch(previousState => !previousState)}
-                    value={whiteSwitch}
-                />
+                <View style={styles.footer}>
+
+                    <TouchableOpacity
+                        style={styles.backImage}
+                        onPress={exitComponent}
+                    >
+                        <Image
+                            style={{ width: 60, height: 60, }}
+                            source={require('./assets/back.png')}
+                        />
+                    </TouchableOpacity>
+
+                    <Switch
+                        style={{ height: 50, width: 50 }}
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={whiteSwitch ? "#f5dd4b" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => setwhiteSwitch(previousState => !previousState)}
+                        value={whiteSwitch}
+                    />
+                </View>
 
             </View>
         </View>
@@ -229,6 +249,28 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    whiteSlider: {
+        flex: 2,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    footer: {
+        flex: 2,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        width: '100%',
+
+    },
+
+    backImage: {
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
     },
 
 
