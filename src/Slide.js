@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, Text, View, LogBox, Switch, Image, TouchableOpacity } from 'react-native';
-// import { ColorPicker, ColorPickerRef } from 'react-native-color-picker-light';
 import Slider from '@react-native-community/slider';
 import ColorPicker from 'react-native-wheel-color-picker';
 
@@ -228,12 +227,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
     },
-
-    // whiteLedOptions: {
-    //     flex: 2,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    // },
 
     showColor: {
         flex: 1,

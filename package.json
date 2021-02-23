@@ -13,7 +13,6 @@
     "@react-native-community/slider": "^3.0.3",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-color-picker-light": "^1.0.1",
     "react-native-wheel-color-picker": "^1.0.2"
   },
   "devDependencies": {
