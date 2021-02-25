@@ -35,9 +35,8 @@ export default function Slide() {
             let tramaLED = hexToRGBTrama(colorLed) + tramaLEDWhite;
 
             console.log(tramaLED);
-            setTextColor(colorLed);
         }
-
+        setTextColor(colorLed);
     }, [colorLed]);
 
     useEffect(() => {
@@ -90,8 +89,8 @@ export default function Slide() {
                         onColorChange={color => setColorLed(color)}
                         // onColorChangeComplete={color => setColorLed(color)}
                         swatches={false}
-                        thumbSize={40}
-                        sliderSize={40}
+                        thumbSize={30}
+                        sliderSize={30}
                         noSnap={false}
                         row={false}
                     />
@@ -222,8 +221,8 @@ const styles = StyleSheet.create({
 
     colorLedPick: {
         width: '85%',
-        height: '95%',
-        justifyContent: 'center'
+        height: '80%',
+        position: 'absolute',
     },
 
     colorLedOptions: {
@@ -239,7 +238,7 @@ const styles = StyleSheet.create({
 
     showColor: {
         flex: 1,
-        margin: '15%',
+        margin: 40,
         borderWidth: 4,
         borderRadius: 20,
         borderColor: 'black',
