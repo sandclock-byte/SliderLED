@@ -83,8 +83,8 @@ export default function Slide() {
     return (
         <View style={{ width: '100%', height: '100%', backgroundColor: 'lightgrey' }}>
 
-            <View style={styles.colorLedPick}>
-                <View style={{ width: '85%', }}>
+            <View style={styles.colorLedPickContainer}>
+                <View style={styles.colorLedPick}>
                     <ColorPicker
                         color={prevColor}
                         onColorChange={color => setColorLed(color)}
@@ -100,8 +100,10 @@ export default function Slide() {
 
             <View style={styles.colorLedOptions}>
 
-                <View style={[styles.showColor, { backgroundColor: colorLed != '' ? colorLed : prevColor }]}>
-                    <Text>{textColor}</Text>
+                <View style={styles.showColorContainer}>
+                    <View style={[styles.showColor, { backgroundColor: colorLed != '' ? colorLed : prevColor }]}>
+                        <Text>{textColor}</Text>
+                    </View>
                 </View>
 
                 <View style={styles.switchColor}>
@@ -212,9 +214,16 @@ const tramaToColor = (trama) => {
 }
 
 const styles = StyleSheet.create({
-    colorLedPick: {
+    colorLedPickContainer: {
         flex: 3,
         alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    colorLedPick: {
+        width: '85%',
+        height: '95%',
+        justifyContent: 'center'
     },
 
     colorLedOptions: {
@@ -230,12 +239,16 @@ const styles = StyleSheet.create({
 
     showColor: {
         flex: 1,
-        margin: 15,
+        margin: '15%',
         borderWidth: 4,
         borderRadius: 20,
         borderColor: 'black',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    showColorContainer: {
+        flex: 1,
     },
 
     switchColor: {
